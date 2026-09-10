@@ -2,7 +2,7 @@
 #include "ejercicio8.h"
 //inciso a
 
-int max_element_index(Vector* v,int i,int j,int cmp(VECTOR_ELEMENT,VECTOR_ELEMENT)){ // en este caso no es necesario incorporar una funcion de comparacion ya que el ejercicio pide trabajar con enteros, es una funcion que serviria para cualquier elemento.
+int max_element_index(Vector* v,int i,int j,int cmp(VECTOR_ELEMENT,VECTOR_ELEMENT)){ // busco primero el indice del maximo valor de forma recursiva y luego devuelvo el valor con otra funcion
     int result=i;
     int n=vector_size(v);
     if(i<n && j<n){
@@ -43,9 +43,12 @@ VECTOR_ELEMENT min_element(Vector* v,int cmp(VECTOR_ELEMENT,VECTOR_ELEMENT)){
 //inciso c
 
 VECTOR_ELEMENT _suma_elementos(Vector* v,int i){
-    int result=0;
+    VECTOR_ELEMENT result=NULL;
     if(i<vector_size(v)){
-    result=vector_get(v,i)+_suma_elementos(v,i+1);
+    result=fraction_add(vector_get(v,i),_suma_elementos(v,i+1));
+    }
+    if(i>=vector_size(v)){
+        result=fraction_new(0,1);// si no hago esto el ultimo fraction_add devolveria NULL y perderia todas las sumas
     }
     return result;
 }
@@ -56,14 +59,18 @@ VECTOR_ELEMENT suma_elementos(Vector* v){
 
 //inciso d
 VECTOR_ELEMENT _promedio_elementos(Vector* v,int i){
-    int result=0;
+    VECTOR_ELEMENT result=NULL;
     if(i<vector_size(v)){
         if(i==0){
-            result=(vector_get(v,i)+_promedio_elementos(v,i+1))/vector_size(v); 
+            fraction* divisor=fraction_new(vector_size(v),1);
+            result=fraction_div(fraction_add(vector_get(v,i),_promedio_elementos(v,i+1)),divisor); 
+            fraction_destroy(divisor);
         }else{
-            result=vector_get(v,i)+_promedio_elementos(v,i+1);
+            result=fraction_add(vector_get(v,i),_promedio_elementos(v,i+1));
         }
-
+    }
+    if(i>=vector_size(v)){
+        result=fraction_new(0,1);
     }
     return result;
 }
@@ -73,24 +80,24 @@ VECTOR_ELEMENT promedio_elementos(Vector* v){
 
 // inciso e
 
-void _print_vector(Vector* v,int i){
+void _print_vector(Vector* v,int i,void print(VECTOR_ELEMENT )){
     if(i<vector_size(v)){
-        printf("%d ",vector_get(v,i));
-        _print_vector(v,i+1);
+         print(vector_get(v,i));
+        _print_vector(v,i+1,print);
     }
 }
-void print_vector(Vector* v){
-    _print_vector(v,0);
+void print_vector(Vector* v,void print(VECTOR_ELEMENT )){
+    _print_vector(v,0,print);
 }
 
 //inciso f
 
-void _print_vector_inv(Vector* v,int i){
+void _print_vector_inv(Vector* v,int i,void print(VECTOR_ELEMENT )){
     if(i<vector_size(v)){
-        _print_vector_inv(v,i+1);
-        printf(" %d",vector_get(v,i));
+        _print_vector_inv(v,i+1,print);
+        print(vector_get(v,i));
     }
 }
-void print_vector_inv(Vector* v){
-    _print_vector_inv(v,0);
+void print_vector_inv(Vector* v,void print(VECTOR_ELEMENT)){
+    _print_vector_inv(v,0,print);
 }

@@ -2,9 +2,10 @@
 #define _VECTOR
 #include <stdio.h>
 #include <stdlib.h>
+#include "fracciones.h"
 
-#define VECTOR_ELEMENT int
-#define VECTOR_ELEMENT_DEFAULT -1000000
+#define VECTOR_ELEMENT fraction*
+#define VECTOR_ELEMENT_DEFAULT NULL
 
 typedef struct _vector Vector;
 void print_entero(int a);
@@ -28,13 +29,13 @@ int vector_isempty(Vector* v);
 VECTOR_ELEMENT vector_get(Vector* v, int index);
 // Permite obtener el valor de una posición del vector
 
-VECTOR_ELEMENT vector_set(Vector* v, int index, VECTOR_ELEMENT value);
+VECTOR_ELEMENT vector_set(Vector* v, int index, VECTOR_ELEMENT );
 // Permite reemplazar el valor de una posición del vector
 
-int vector_add(Vector* v, VECTOR_ELEMENT value);
+int vector_add(Vector* v, VECTOR_ELEMENT );
 // Permite agregar un elemento al final
 
-int vector_insert(Vector* v, int index, VECTOR_ELEMENT value);
+int vector_insert(Vector* v, int index, VECTOR_ELEMENT );
 // Permite agregar un elemento en una posición determinada.
 
 VECTOR_ELEMENT vector_remove(Vector* v, int index);
@@ -43,7 +44,7 @@ VECTOR_ELEMENT vector_remove(Vector* v, int index);
 void vector_print(Vector* v, void (*print)(VECTOR_ELEMENT));
 // Permite imprimir un vector por consola
 void bubble_sort_vec(Vector* v,int cmp(VECTOR_ELEMENT,VECTOR_ELEMENT));// ejercicio 12
-int sequential_search(Vector* v,VECTOR_ELEMENT value,int cmp(VECTOR_ELEMENT,VECTOR_ELEMENT));
-int _binary_search(Vector* v,VECTOR_ELEMENT value,int cmp(VECTOR_ELEMENT,VECTOR_ELEMENT));
+int sequential_search(Vector* v,VECTOR_ELEMENT ,int cmp(VECTOR_ELEMENT,VECTOR_ELEMENT));
+int _binary_search(Vector* v,VECTOR_ELEMENT ,int cmp(VECTOR_ELEMENT,VECTOR_ELEMENT));
 
 #endif

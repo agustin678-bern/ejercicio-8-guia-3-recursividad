@@ -6,30 +6,47 @@ int cmp_entero(int a,int b){
 int main(){
     Vector* nuevo=vector_new(10);
 
-    vector_add(nuevo,100);
-    vector_add(nuevo,234);
-    vector_add(nuevo,1233);
-    vector_add(nuevo,3412);
-    vector_add(nuevo,1232);
-    vector_add(nuevo,332);
-    vector_add(nuevo,2);
-    vector_add(nuevo,3);
-    vector_add(nuevo,4);
+    vector_add(nuevo,fraction_new(1,2));
+    vector_add(nuevo,fraction_new(1,3));
+    vector_add(nuevo,fraction_new(1,25));
+    vector_add(nuevo,fraction_new(1,4));
+    vector_add(nuevo,fraction_new(3,2));
+    vector_add(nuevo,fraction_new(1,2));
+    vector_add(nuevo,fraction_new(1,2));
+    vector_add(nuevo,fraction_new(1,2));
+    vector_add(nuevo,fraction_new(1,4));
 
 
     printf("vector impreso:");
-    vector_print(nuevo,print_entero);
+    vector_print(nuevo,fraction_print);
     printf("\n");
-    printf("valor maximo %d \n",max_element(nuevo,cmp_entero));
-    printf("valor minimo %d \n",min_element(nuevo,cmp_entero));
-    printf("elementos del vector sumados= %d \n",suma_elementos(nuevo));
-    printf("promedio de los elementos del vector: %d \n",promedio_elementos(nuevo));
+    printf("valor maximo:");
+    fraction* maximo=max_element(nuevo,fraction_cmp);
+    fraction_print(maximo);
+    printf("\n");
+    printf("valor minimo:");
+    fraction* minimo=min_element(nuevo,fraction_cmp);
+    fraction_print(minimo);
+    printf("\n");
+    printf("elementos del vector sumados");
+    fraction* suma=suma_elementos(nuevo);
+    fraction_print(suma);
+    printf("\n");
+    printf("promedio de los elementos del vector:");
+    fraction* promedio=promedio_elementos(nuevo);
+    fraction_print(promedio);
+    printf("\n");
     printf("vector impreso en forma recursiva: ");
-    print_vector(nuevo);
+    print_vector(nuevo,fraction_print);
     printf("\n");
     printf("vector impreso en forma recursiva inversa: ");
-    print_vector_inv(nuevo);
+    print_vector_inv(nuevo,fraction_print);
     printf("\n");
-    
+    int cant=vector_size(nuevo);
+    for(int i=0;i<cant;i++){
+        fraction_destroy(vector_get(nuevo,i));
+    }
+    vector_free(nuevo);
+    printf("vector eliminado correctamente");
     return 0;
 }
